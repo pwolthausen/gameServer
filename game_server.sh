@@ -52,19 +52,19 @@ if [[ $EUID -ne 0 ]]; then
     echo "This must be run as root"
     exit 1
 fi
-for port in 7777..7785; do
+for port in {7777..7785}; do
   iptables -t filter -I INPUT -p udp --dport $port -j ACCEPT
 done
-for port in 7777..7785; do
+for port in {7777..7785}; do
   iptables -t filter -I INPUT -p tcp --dport $port -j ACCEPT
 done
-for port in 27015..27019; do
+for port in {27015..27019}; do
   iptables -t filter -I INPUT -p udp --dport $port -j ACCEPT
 done
-for port in 27015..27019; do
+for port in {27015..27019}; do
   iptables -t filter -I INPUT -p tcp --dport $port -j ACCEPT
 done
-for port in 32330..32334; do
+for port in {32330..32334}; do
   iptables -t filter -I INPUT -p tcp --dport $port -j ACCEPT
 done
 # for port in ${UDP_PORTS[@]}; do
@@ -89,8 +89,8 @@ for server in lost genesis fjordur; do
 done
 sudo -u steam curl -o /home/steam/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
 
-rm /etc/arkmanager/instances/main.cfg
-rm /etc/arkmanager/instances/instance.cfg.example
+rm -f /etc/arkmanager/instances/main.cfg
+rm -f /etc/arkmanager/instances/instance.cfg.example
 sudo -u steam arkmanager install @lost
 sudo -u steam arkmanager install @island
 sudo -u steam arkmanager install @genesis
