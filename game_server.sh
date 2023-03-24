@@ -2,6 +2,7 @@
 
 TCP_PORTS=("7777" "7778" "27015" "32330")
 UDP_PORTS=("7777" "7778" "27015")
+SERVERS=("island" "lost" "genesis" "fjordur")
 
 ## Update and install dependancies
 apt update
@@ -61,10 +62,7 @@ done
 for port in {27015..27019}; do
   iptables -t filter -I INPUT -p udp --dport $port -j ACCEPT
 done
-for port in {27015..27019}; do
-  iptables -t filter -I INPUT -p tcp --dport $port -j ACCEPT
-done
-for port in {32330..32334}; do
+for port in {27015..27025}; do
   iptables -t filter -I INPUT -p tcp --dport $port -j ACCEPT
 done
 # for port in ${UDP_PORTS[@]}; do
@@ -84,16 +82,16 @@ fi
 
 ## Configure ark
 curl -o /etc/arkmanager/arkmanager.cfg https://raw.githubusercontent.com/pwolthausen/gameServer/main/arkmanager.cfg
-for server in lost genesis fjordur; do
+for server in ${SERVERS[@]}; do
   curl -o /etc/arkmanager/instances/$server.cfg https://raw.githubusercontent.com/pwolthausen/gameServer/main/$server.cfg
 done
-sudo -u steam curl -o /home/steam/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
+
 
 rm -f /etc/arkmanager/instances/main.cfg
 rm -f /etc/arkmanager/instances/instance.cfg.example
-sudo -u steam arkmanager install @lost
-sudo -u steam arkmanager install @island
-sudo -u steam arkmanager install @genesis
-sudo -u steam arkmanager install @fjordur
+sudo -u steam arkmanager install @all
 sudo -u steam arkmanager installmods @all
 sudo -u steam arkmanager update @all
+
+sudo -u steam curl -o /home/steam/ARK/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
+sudo -u steam curl -o /home/steam/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
