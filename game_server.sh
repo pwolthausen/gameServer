@@ -12,7 +12,7 @@ apt install software-properties-common
 dpkg --add-architecture i386
 apt update
 
-apt install vim curl wget steamcmd perl-modules lsof libc6-i386 lib32gcc-s1 bzip2
+apt install vim curl wget steamcmd perl-modules lsof libc6-i386 lib32gcc-s1 bzip2 -y
 
 ## Create Steam User
 useradd -m -s /bin/bash steam
@@ -22,9 +22,9 @@ useradd -m -s /bin/bash steam
 ## Install Ark
 echo 'fs.file-max=100000' >> /etc/sysctl.conf
 echo '*               soft    nofile          1000000' >> /etc/security/limits.conf
-ehco '*               hard    nofile          1000000' >> /etc/security/limits.conf
+echo '*               hard    nofile          1000000' >> /etc/security/limits.conf
 echo 'session required pam_limits.so' >> /etc/pam.d/common-session
-sudo -u steam steamcmd +force_install_dir /home/steam +login anonymous +app_update 376030 +quit
+sudo -u steam /usr/games/steamcmd +force_install_dir /home/steam +login anonymous +app_update 376030 +quit
 
 ## Open ports in iptables for arkmanager
 if [[ $EUID -ne 0 ]]; then
