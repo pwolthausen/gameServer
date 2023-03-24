@@ -12,7 +12,7 @@ apt install software-properties-common
 dpkg --add-architecture i386
 apt update
 
-apt install vim curl wget steamcmd perl-modules lsof libc6-i386 lib32gcc-s1 lib32gcc1 bzip2
+apt install vim curl wget steamcmd perl-modules lsof libc6-i386 lib32gcc-s1 bzip2
 
 ## Create Steam User
 useradd -m -s /bin/bash steam
