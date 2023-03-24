@@ -42,11 +42,11 @@ done
 curl -sL https://git.io/arkmanager | bash -s steam
 
 ## Configure ark
-curl -o /etc/arkmanager/arkmanager.cfg https://raw.githubusercontent.com/pwolthausen/gameServer/arkmanager.cfg
+curl -o /etc/arkmanager/arkmanager.cfg https://raw.githubusercontent.com/pwolthausen/gameServer/main/arkmanager.cfg
 for server in lost genesis fjordur; do
-  curl -o /etc/arkmanager/instances/$server.cfg https://raw.githubusercontent.com/pwolthausen/gameServer/$server.cfg
+  curl -o /etc/arkmanager/instances/$server.cfg https://raw.githubusercontent.com/pwolthausen/gameServer/main/$server.cfg
 done
-sudo -u steam curl -o /home/steam/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/DefaultGame.ini
+sudo -u steam curl -o /home/steam/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
 
 sudo -u steam arkmanager install @lost
 sudo -u steam arkmanager install @genesis
