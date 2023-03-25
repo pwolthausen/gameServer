@@ -2,7 +2,7 @@
 
 TCP_PORTS=("7777" "7778" "27015" "32330")
 UDP_PORTS=("7777" "7778" "27015")
-SERVERS=("island" "lost" "genesis" "fjordur")
+SERVERS=("main" "lost" "genesis" "fjordur")
 
 ## Update and install dependancies
 apt update
@@ -41,11 +41,11 @@ else
   echo 'session required pam_limits.so' >> /etc/pam.d/common-session; 
 fi
 
-if test -f /home/steam/ShooterGame/Binaries/Linux/ShooterGameServer;
+if test -f /home/steam/ARK/ShooterGame/Binaries/Linux/ShooterGameServer;
 then 
   echo "Ark already installed";
 else
-  sudo -u steam /usr/games/steamcmd +force_install_dir /home/steam +login anonymous +app_update 376030 +quit;
+  sudo -u steam /usr/games/steamcmd +force_install_dir /home/steam/ARK +login anonymous +app_update 376030 +quit;
 fi
 
 ## Open ports in iptables for arkmanager
@@ -85,7 +85,7 @@ curl -o /etc/arkmanager/arkmanager.cfg https://raw.githubusercontent.com/pwoltha
 for server in ${SERVERS[@]}; do
   curl -o /etc/arkmanager/instances/$server.cfg https://raw.githubusercontent.com/pwolthausen/gameServer/main/$server.cfg
 done
-
+sudo -u steam curl -o /home/steam/ARK/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
 
 rm -f /etc/arkmanager/instances/main.cfg
 rm -f /etc/arkmanager/instances/instance.cfg.example
@@ -93,5 +93,3 @@ sudo -u steam arkmanager install @all
 sudo -u steam arkmanager installmods @all
 sudo -u steam arkmanager update @all
 
-sudo -u steam curl -o /home/steam/ARK/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
-sudo -u steam curl -o /home/steam/ShooterGame/Config/DefaultGame.ini https://raw.githubusercontent.com/pwolthausen/gameServer/main/DefaultGame.ini
