@@ -21,12 +21,14 @@ useradd -m -s /bin/bash steam
 #### Arkmanager ####
 
 ## Install Ark
+# Configure file limit
 if ( grep -Fq file-max /etc/sysctl.conf );
 then
   echo "Already configured";
 else
   echo "fs.file-max=100000" >> /etc/sysctl.conf; 
 fi
+
 if ( grep -Fq "soft    nofile" /etc/security/limits.conf );
 then
   echo "Already configured";
@@ -34,6 +36,7 @@ else
   echo '*               soft    nofile          1000000' >> /etc/security/limits.conf
   echo '*               hard    nofile          1000000' >> /etc/security/limits.conf;
 fi
+
 if ( grep -Fq "pam_limits.so" /etc/pam.d/common-session );
 then
   echo "Already configured";
@@ -41,6 +44,7 @@ else
   echo 'session required pam_limits.so' >> /etc/pam.d/common-session; 
 fi
 
+# Install ShooterGame, if not already present
 if test -f /home/steam/ARK/ShooterGame/Binaries/Linux/ShooterGameServer;
 then 
   echo "Ark already installed";
@@ -93,3 +97,9 @@ sudo -u steam arkmanager install @all
 sudo -u steam arkmanager installmods @all
 sudo -u steam arkmanager update @all
 
+#### Valheim ####
+# https://linuxgsm.com/servers/vhserver/
+useradd -m -s /bin/bash vhserver
+
+sudo -u vhserver wget -O /home/vhserver/linuxgsm.sh https://linuxgsm.sh && chmod +x /home/vhserver/linuxgsm.sh && bash /home/vhserver/linuxgsm.sh /home/vhserver/vhserver
+sudo -u vhserver /home/vhserver/vhserver install
